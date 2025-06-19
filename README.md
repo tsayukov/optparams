@@ -1,6 +1,12 @@
 # optparams
 
 A helper package to add optional parameters to your functions.
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+
 ## Installation
 
 ```bash
