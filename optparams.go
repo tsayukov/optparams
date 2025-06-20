@@ -18,7 +18,8 @@ var ErrFailFast = errors.New("fail fast")
 //     termination, until the first [Func] call returns wrapped [ErrFailFast].
 func Apply[T any](receiver *T, opts ...Func[T]) error {
 	if receiver == nil {
-		return fmt.Errorf("receiver %T is nil", receiver)
+		var zero T
+		return fmt.Errorf("receiver %T is nil", zero)
 	}
 
 	var errs []error
