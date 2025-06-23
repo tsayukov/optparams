@@ -9,6 +9,9 @@ import (
 )
 
 // Func should initialize some fields in the passed receiver.
+//
+// The typical usage is to use the final incoming parameter in a function
+// signature as a type ...Func.
 type Func[T any] func(receiver *T) error
 
 // ErrFailFast indicates that a failure in the [Func] call causes the [Apply]
