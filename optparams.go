@@ -6,6 +6,7 @@ package optparams
 import (
 	"errors"
 	"fmt"
+	"reflect"
 )
 
 // Func should initialize some fields in the passed receiver.
@@ -13,6 +14,26 @@ import (
 // The typical usage is to use the final incoming parameter in a function
 // signature as a type ...Func.
 type Func[T any] func(receiver *T) error
+
+// Default creates [Func] that sets the passed field to the specified default
+// value if the field does not equal its zero value.
+//
+// Note that a [Func] call does not check that the field belongs to the [Func]
+// receiver, but it returns an error if the pointer to the field is nil.
+func Default[T any, V any](field *V, default_ V) Func[T] {
+	return func(receiver *T) error {
+		if field == nil {
+			return fmt.Errorf("pointer %T to field in receiver %T is nil", field, *receiver)
+		}
+
+		var zero V
+		if reflect.DeepEqual(*field, zero) {
+			*field = default_
+		}
+
+		return nil
+	}
+}
 
 // ErrFailFast indicates that a failure in the [Func] call causes the [Apply]
 // call to terminate early.
