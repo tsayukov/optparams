@@ -1,6 +1,7 @@
 # optparams
 
-A helper package to add optional parameters to your functions.
+This package helps create functions with optional parameters, including those
+with or without default values.
 
 ## Table of Contents
 
