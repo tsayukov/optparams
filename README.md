@@ -7,6 +7,7 @@ with or without default values.
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [License](#license)
 
 ## Installation
 
@@ -18,6 +19,10 @@ go get github.com/tsayukov/optparams
 
 See examples [here][example].
 
+## License
 
+This package is licensed under the terms of the MIT License
+(see [LICENSE][license] file).
 
 [example]: ./example_test.go
+[license]: ./LICENSE
