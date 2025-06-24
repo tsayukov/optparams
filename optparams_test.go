@@ -192,7 +192,7 @@ func Test_Apply(t *testing.T) {
 			},
 			wantErr: fmt.Errorf(
 				"pointer %T to field in receiver %T is nil",
-				rune(0), mockReceiver{},
+				new(rune), mockReceiver{},
 			),
 		},
 		func() testCase {
