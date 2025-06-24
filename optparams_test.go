@@ -83,6 +83,7 @@ func Test_Apply(t *testing.T) {
 		{
 			name:     "one failed opt",
 			receiver: newMockReceiver(),
+			want:     newMockReceiver(),
 			opts: []Func[mockReceiver]{
 				newOpt(0, 'x', errMocks[0]),
 			},
@@ -185,6 +186,7 @@ func Test_Apply(t *testing.T) {
 		{
 			name:     "nil field",
 			receiver: newMockReceiver(),
+			want:     newMockReceiver(),
 			opts: []Func[mockReceiver]{
 				Default[mockReceiver](nil, 'a'),
 			},
