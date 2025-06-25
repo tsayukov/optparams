@@ -20,7 +20,7 @@ type Func[T any] func(receiver *T) error
 //
 // Note that a [Func] call does not check that the field belongs to the [Func]
 // receiver, but it returns an error if the pointer to the field is nil.
-func Default[T any, V any](field *V, default_ V) Func[T] {
+func Default[T any, V any](field *V, defaultValue V) Func[T] {
 	return func(receiver *T) error {
 		if field == nil {
 			return fmt.Errorf("pointer %T to field in receiver %T is nil", field, *receiver)
@@ -28,7 +28,7 @@ func Default[T any, V any](field *V, default_ V) Func[T] {
 
 		var zero V
 		if reflect.DeepEqual(*field, zero) {
-			*field = default_
+			*field = defaultValue
 		}
 
 		return nil
