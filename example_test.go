@@ -46,8 +46,8 @@ func NewClient(apiToken string, opts ...optparams.Func[Client]) (*Client, error)
 	return c, nil
 }
 
-// WithHttpClient is an example of a function to pass an optional argument.
-func WithHttpClient(httpClient *http.Client) optparams.Func[Client] {
+// WithHTTPClient is an example of a function to pass an optional argument.
+func WithHTTPClient(httpClient *http.Client) optparams.Func[Client] {
 	return func(c *Client) error {
 		if httpClient == nil {
 			return optparams.ErrFailFast
@@ -98,7 +98,7 @@ func Example_struct() {
 		// Required arguments:
 		apiToken,
 		// Optional arguments:
-		WithHttpClient(httpClient),
+		WithHTTPClient(httpClient),
 	)
 	if err != nil {
 		log.Fatal(err)
