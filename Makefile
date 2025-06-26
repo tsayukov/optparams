@@ -61,6 +61,14 @@ else
     && [ $${answer:-N} = 'y' ]
 endif
 
+.PHONY: git/no-dirty
+git/no-dirty:
+ifeq ($(OS),Windows_NT)
+	@ if (![string]::IsNullOrEmpty("$(shell git status --porcelain)")) { throw "" }
+else
+	@ test -z "$(shell git status --porcelain)"
+endif
+
 .PHONY: create/binary_dir
 create/binary_dir:
 ifeq ($(OS),Windows_NT)
@@ -83,7 +91,7 @@ cgo/disable:
 
 ## audit: run quality control checks
 .PHONY: audit
-audit: fmt/no-dirty mod/tidy-diff mod/verify govulncheck golangci-lint ;
+audit: git/no-dirty fmt/no-dirty mod/tidy-diff mod/verify govulncheck golangci-lint ;
 
 ## mod/tidy-diff: check missing and unused modules without modifying the `go.mod` and `go.sum` files
 .PHONY: mod/tidy-diff
