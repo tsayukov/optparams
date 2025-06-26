@@ -33,7 +33,7 @@ jobs:
         with:
           version: v2.1.6
           # Use the official action to download, but do not run it.
-          args: --version
+          args: --help
 
       - name: Audit
         run: make audit
