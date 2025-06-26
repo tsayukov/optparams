@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_Apply(t *testing.T) {
@@ -225,9 +226,9 @@ func Test_Apply(t *testing.T) {
 			err := Apply(tt.receiver, tt.opts...)
 
 			if tt.wantErr != nil {
-				assert.EqualError(t, err, tt.wantErr.Error())
+				require.EqualError(t, err, tt.wantErr.Error())
 			} else {
-				assert.NoError(t, err)
+				require.NoError(t, err)
 			}
 
 			assert.Equal(t, tt.want, tt.receiver)
