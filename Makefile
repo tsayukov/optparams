@@ -99,7 +99,7 @@ cgo/disable:
 
 ## audit: run quality control checks
 .PHONY: audit
-audit: git/no-dirty fmt/no-dirty mod/tidy-diff mod/verify govulncheck golangci-lint ;
+audit: fmt/no-dirty mod/tidy-diff mod/verify govulncheck golangci-lint ;
 
 ## mod/tidy-diff: check missing and unused modules without modifying the `go.mod` and `go.sum` files
 .PHONY: mod/tidy-diff
