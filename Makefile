@@ -116,10 +116,14 @@ mod/tidy:
 mod/verify:
 	@ go mod verify
 
+.PHONY: install/govulncheck
+install/govulncheck:
+	@ cd tools && go get golang.org/x/vuln/cmd/govulncheck && go install golang.org/x/vuln/cmd/govulncheck
+
 ## govulncheck: report known vulnerabilities that affect Go code
 .PHONY: govulncheck
-govulncheck:
-	@ govulncheck ./...
+govulncheck: install/govulncheck
+	@ $(GOBIN)/govulncheck ./...
 
 ## fmt: gofmt (reformat) package sources
 .PHONY: fmt
