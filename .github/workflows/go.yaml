@@ -29,7 +29,7 @@ jobs:
         run: make mod/download
 
       - name: Install golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
           version: v2.1.6
           # Use the official action to download, but do not run it.
