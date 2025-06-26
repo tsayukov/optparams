@@ -53,6 +53,9 @@ BINARY_DIR = bin
 # Directory containing the Makefile.
 PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+export GOBIN ?= $(PROJECT_ROOT)$(BINARY_DIR)
+export PATH := $(GOBIN)$(LIST_SEP)$(PATH)
+
 # ============================================================================ #
 # Helpers
 # ============================================================================ #
