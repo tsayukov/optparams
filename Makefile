@@ -46,7 +46,7 @@ all: audit test ;
 # e.g., `make <variable_1>=<value_1> <variable_2>=<value_2> [...]`.
 # ============================================================================ #
 
-binary_dir = bin
+BINARY_DIR = bin
 
 # ============================================================================ #
 # Helpers
@@ -72,9 +72,9 @@ endif
 .PHONY: create/binary_dir
 create/binary_dir:
 ifeq ($(OS),Windows_NT)
-	@ [void](New-Item "$(binary_dir)" -ItemType Directory -Force)
+	@ [void](New-Item "$(BINARY_DIR)" -ItemType Directory -Force)
 else
-	@ mkdir -p "$(binary_dir)"
+	@ mkdir -p "$(BINARY_DIR)"
 endif
 
 .PHONY: cgo/enable
@@ -145,8 +145,8 @@ test: cgo/enable
 ## test/cover: run all the tests and display coverage
 .PHONY: test/cover
 test/cover: create/binary_dir cgo/enable
-	@ go test -v -race -coverpkg=./... -coverprofile='$(binary_dir)/coverage.out' ./...
-	@ go tool cover -html='$(binary_dir)/coverage.out' -o '$(binary_dir)/coverage.html'
+	@ go test -v -race -coverpkg=./... -coverprofile='$(BINARY_DIR)/coverage.out' ./...
+	@ go tool cover -html='$(BINARY_DIR)/coverage.out' -o '$(BINARY_DIR)/coverage.html'
 
 # ============================================================================ #
 # Build
@@ -161,9 +161,9 @@ mod/download:
 .PHONY: clean
 clean:
 ifeq ($(OS),Windows_NT)
-	@ if (Test-Path "$(binary_dir)" -PathType Container) { <#\
- #>     Remove-Item "$(binary_dir)\*" -Recurse -Force <#\
+	@ if (Test-Path "$(BINARY_DIR)" -PathType Container) { <#\
+ #>     Remove-Item "$(BINARY_DIR)\*" -Recurse -Force <#\
  #> }
 else
-	@ rm -rf $(binary_dir)/*
+	@ rm -rf $(BINARY_DIR)/*
 endif
