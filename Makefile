@@ -10,8 +10,10 @@
 
 ifeq ($(OS),Windows_NT)
     SHELL = pwsh.exe
+    LIST_SEP = ;
 else
     SHELL = /bin/sh
+    LIST_SEP = :
 endif
 
 # Explicitly say what the target is default; change it as necessary.
