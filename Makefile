@@ -50,6 +50,9 @@ all: audit test ;
 
 BINARY_DIR = bin
 
+# Directory containing the Makefile.
+PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+
 # ============================================================================ #
 # Helpers
 # ============================================================================ #
