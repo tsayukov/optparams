@@ -1,0 +1,295 @@
+version: "2"
+
+run:
+  # Timeout for total work, e.g. 30s, 5m, 5m30s.
+  # If the value is lower or equal to 0, the timeout is disabled.
+  timeout: 5m
+
+  # Include test files or not.
+  tests: true
+
+issues:
+  # Print all issues reported by all linters.
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+  # Fix found issues (if it's supported by the linter).
+  fix: false
+
+formatters:
+  enable:
+    # Checks if the code is formatted according to 'gofmt' command. 🔨 AutoFix.
+    - gofmt
+
+    # Checks if the code and import statements are formatted according
+    # to the 'goimports' command. 🔨 AutoFix.
+    - goimports
+
+    # Checks if code is formatted, and fixes long lines. 🔨 AutoFix.
+    - golines
+
+  settings:
+    gofmt:
+      # Apply the rewrite rules to the source before reformatting.
+      rewrite-rules:
+        - pattern: "interface{}"
+          replacement: "any"
+
+    goimports:
+      # A list of prefixes, which, if set, checks import paths with the given
+      # prefixes are grouped after 3rd-party packages.
+      local-prefixes:
+        - github.com/tsayukov/optparams
+
+    golines:
+      # Target maximum line length.
+      max-len: 100
+
+      # Length of a tabulation.
+      tab-len: 4
+
+linters:
+  default: none
+  enable:
+    # Default linters:
+
+    # Errcheck is a program for checking for unchecked errors in Go code.
+    # These unchecked errors can be critical bugs in some cases.
+    #
+    # Useful settings:
+    #   exclude-functions: add methods and functions that cannot fail
+    - errcheck
+
+    # Vet examines Go source code and reports suspicious constructs.
+    # It is roughly the same as 'go vet' and uses its passes. 🔨 AutoFix.
+    - govet
+
+    # Detects when assignments to existing variables are not used.
+    - ineffassign
+
+    # It's the set of rules from staticcheck. 🔨 AutoFix.
+    - staticcheck
+
+    # Checks Go code for unused constants, variables, functions and types.
+    - unused
+
+    # Extra linters:
+
+    # Checks that all code identifiers does not have non-ASCII symbols
+    # in the name.
+    - asciicheck
+
+    # Checks for dangerous Unicode character sequences.
+    - bidichk
+
+    # Checks whether HTTP response body is closed successfully.
+    - bodyclose
+
+    # Canonicalheader checks whether net/http.Header uses canonical header.
+    # 🔨 AutoFix.
+    - canonicalheader
+
+    # Containedctx is a linter that detects struct contained context.Context field.
+    - containedctx
+
+    # A linter detects places where loop variables are copied. 🔨 AutoFix.
+    - copyloopvar
+
+    # Check for two durations multiplied together.
+    - durationcheck
+
+    # Checks that sentinel errors are prefixed with the Err and error types
+    # are suffixed with the Error.
+    - errname
+
+    # Check exhaustiveness of enum switch statements.
+    - exhaustive
+
+    # Detects functions from golang.org/x/exp/ that can be replaced
+    # by std functions. 🔨 AutoFix.
+    - exptostd
+
+    # Detects nested contexts in loops and function literals. 🔨 AutoFix.
+    - fatcontext
+
+    # Finds forced type assertions.
+    - forcetypeassert
+
+    # Checks for long functions.
+    - funlen
+
+    # Checks that go compiler directive comments (//go:) are valid.
+    - gocheckcompilerdirectives
+
+    # Computes and checks the cognitive complexity of functions.
+    - gocognit
+
+    # Finds repeated strings that could be replaced by a constant.
+    - goconst
+
+    # Computes and checks the cyclomatic complexity of functions.
+    - gocyclo
+
+    # Check if comments end in a period. 🔨 AutoFix.
+    - godot
+
+    # Detects usage of _FIXME_, _TODO_ and other keywords inside comments.
+    - godox
+
+    # Checks if file header matches to pattern. 🔨 AutoFix.
+    - goheader
+
+    # Manage the use of 'replace', 'retract', and 'excludes' directives in go.mod.
+    - gomoddirectives
+
+    # Inspects source code for security problems.
+    - gosec
+
+    # Finds slice declarations with non-zero initial length.
+    - makezero
+
+    # Find code that shadows one of Go's predeclared identifiers.
+    - predeclared
+
+    # Checks that package variables are not reassigned.
+    - reassign
+
+    # Checks for receiver type consistency.
+    - recvcheck
+
+    # Checks usage of github.com/stretchr/testify. 🔨 AutoFix.
+    - testifylint
+
+    # Thelper detects tests helpers which is not start with t.Helper() method.
+    - thelper
+
+    # Tparallel detects inappropriate usage of t.Parallel() method in your Go test codes.
+    - tparallel
+
+    # Remove unnecessary type conversions.
+    - unconvert
+
+    # Reports uses of functions with replacement inside the testing package.
+    - usetesting
+
+  settings:
+    govet:
+      # Enable some useful analyzers.
+      enable:
+        # Report using Go 1.22 enhanced ServeMux patterns in older Go versions.
+        - httpmux
+
+        # Check for redundant or impossible nil comparisons.
+        - nilness
+
+        # Check for comparing reflect.Value values with == or reflect.DeepEqual.
+        - reflectvaluecompare
+
+        # Check the argument type of sort.Slice.
+        - sortslice
+
+        # Checks for unused writes.
+        - unusedwrite
+
+    staticcheck:
+      checks:
+        # Invalid regular expression.
+        # https://staticcheck.dev/docs/checks/#SA1000
+        - SA1000
+
+    unused:
+      # Mark all struct fields that have been written to as used.
+      field-writes-are-uses: false
+
+      # Treat IncDec statement (e.g., `i++` or `i--`) as both read and write
+      # operation instead of just write.
+      post-statements-are-reads: true
+
+      # Mark all exported fields as used.
+      exported-fields-are-used: false
+
+      # Mark all function parameters as used.
+      parameters-are-used: true
+
+      # Mark all local variables as used.
+      local-variables-are-used: false
+
+      # Mark all identifiers inside generated files as used.
+      generated-is-used: true
+
+    copyloopvar:
+      # Check all assigning the loop variable to another variable.
+      check-alias: true
+
+    funlen:
+      # Checks the number of lines in a function.
+      # If lower than 0, disable the check.
+      lines: 60
+
+      # Checks the number of statements in a function.
+      # If lower than 0, disable the check.
+      statements: 40
+
+      # Ignore comments when counting lines.
+      ignore-comments: true
+
+    gocognit:
+      # Minimal code complexity to report.
+      min-complexity: 20
+
+    gocyclo:
+      # Minimal code complexity to report.
+      min-complexity: 20
+
+    godot:
+      # Comments to be checked: `declarations`, `toplevel`, `noinline` or `all`.
+      scope: all
+
+      # List of regexps for excluding particular comment lines from check.
+      exclude:
+        - "^ TODO:"
+        - "^ FIXME:"
+        - "^ Copyright \\(c\\)"
+        - ":$"
+
+      # Check that each sentence starts with a capital letter.
+      capital: true
+
+    goheader:
+      values:
+        const:
+          # Type the appropriate license name below:
+          LICENSE: the MIT License
+        regexp:
+          # Format: a name or nickname followed by an email
+          AUTHOR: ((\w|\w[\w-]*\w)+\.? )+\S[\w-\.]+@([\w-]+\.)+[\w-]{2,4}
+
+      # The template used for checking.
+      # Put here copyright header template for source code files.
+      # Note: {{ YEAR }} is a builtin value that returns the year relative
+      # to the current machine time.
+      template: |-
+        This file is licensed under the terms of {{ LICENSE }} (see LICENSE file)
+        Copyright (c) {{ YEAR }} {{ AUTHOR }}
+
+    gomoddirectives:
+      # Allow local `replace` directives.
+      replace-local: true
+
+      # Defines a pattern to validate `go` minimum version directive.
+      go-version-pattern: \d\.\d+(\.0)?
+
+  exclusions:
+    # Log a warning if an exclusion rule is unused.
+    warn-unused: true
+
+    # Excluding configuration per-path, per-linter, per-text and per-source.
+    rules:
+      # Exclude some linters from running on tests files.
+      - path: (.+)_test\.go
+        linters:
+          - unused
+          - goconst
+      - source: "^func Test"
+        linters:
+          - funlen
