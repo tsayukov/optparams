@@ -55,7 +55,7 @@ binary_dir = bin
 .PHONY: confirm
 confirm:
 ifeq ($(OS),Windows_NT)
-	@ if ((Read-Host -Prompt "Are you sure? [y/N]") -cne "y") { throw "not confirmed" }
+	@ if ((Read-Host -Prompt "Are you sure? [y/N]") -cne "y") { throw "" }
 else
 	@ read -r -p 'Are you sure? [y/N] ' answer \
     && [ $${answer:-N} = 'y' ]
