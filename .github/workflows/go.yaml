@@ -70,4 +70,5 @@ jobs:
 
           message: ${{ env.COVERAGE }}%
           minColorRange: 50
+          valColorRange: 70
           maxColorRange: 90
