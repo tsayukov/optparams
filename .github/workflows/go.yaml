@@ -44,7 +44,8 @@ jobs:
           echo COVERAGE="$( \
             go tool cover -func="$(make BINARY_DIR)"/coverage.out \
             | grep 'total' \
-            | grep -Eo '[0-9]+\.[0-9]+' \
+            | grep -Eo '[0-9]+\.[0-9]+%' \
+            | grep -Eo '^[0-9]+'
           )" >> $GITHUB_ENV
 
       - name: Create Coverage Badge
@@ -70,5 +71,5 @@ jobs:
 
           message: ${{ env.COVERAGE }}%
           minColorRange: 50
-          valColorRange: 70
-          maxColorRange: 90
+          valColorRange: 75
+          maxColorRange: 100
