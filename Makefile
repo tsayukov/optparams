@@ -122,7 +122,8 @@ cgo/disable:
 .PHONY: audit
 audit: fmt/no-dirty mod/tidy-diff mod/verify govulncheck golangci-lint ;
 
-## mod/tidy-diff: check missing and unused modules without modifying the `go.mod` and `go.sum` files
+## mod/tidy-diff: check missing and unused modules without modifying
+##              : the `go.mod` and `go.sum` files
 .PHONY: mod/tidy-diff
 mod/tidy-diff:
 	@ go mod tidy -diff
@@ -151,7 +152,8 @@ govulncheck: install/govulncheck
 fmt:
 	@ go fmt ./...
 
-## fmt/no-dirty: gofmt (reformat) package sources and fail if there are some changes
+## fmt/no-dirty: gofmt (reformat) package sources and fail if there are some
+##             : changes
 .PHONY: fmt/no-dirty
 fmt/no-dirty:
 ifeq ($(OS),Windows_NT)
