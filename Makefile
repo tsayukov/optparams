@@ -3,6 +3,13 @@
 # This is a multi-platform Makefile, trying to support both Unix-like
 # and Windows operating systems.
 #
+# Every comment line that starts with two '#' is parsed by the 'help' target
+# as part of the help message:
+#  - use a single ':' to output an empty line;
+#  - use '<target>:<description>' for a single-line description;
+#  - use '<target>:<description>' with the following ':<description>'
+#    for a multiline description.
+#
 # Note that to to split a PowerShell command line over multiple lines
 # use a comment block with a backslash inside:
 #   do things <#\
