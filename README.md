@@ -2,6 +2,7 @@
 
 [![Go Reference][go-ref-svg]][go-ref]
 [![Build Status][ci-svg]][ci]
+[![MIT License][license-svg]][license]
 
 This package helps create functions with optional parameters, including those
 with or without default values.
@@ -31,5 +32,6 @@ This package is licensed under the terms of the MIT License
 [go-ref]: https://pkg.go.dev/github.com/tsayukov/optparams
 [ci-svg]: https://github.com/tsayukov/optparams/actions/workflows/go.yaml/badge.svg
 [ci]: https://github.com/tsayukov/optparams/actions/workflows/go.yaml
-[example]: ./example_test.go
+[license-svg]: https://img.shields.io/badge/License-MIT-blue.svg
 [license]: ./LICENSE
+[example]: ./example_test.go
