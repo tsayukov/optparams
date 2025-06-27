@@ -1,5 +1,7 @@
 # optparams
 
+[![Go Reference][go-ref-svg]][go-ref]
+
 This package helps create functions with optional parameters, including those
 with or without default values.
 
@@ -24,5 +26,7 @@ See examples [here][example].
 This package is licensed under the terms of the MIT License
 (see [LICENSE][license] file).
 
+[go-ref-svg]: https://pkg.go.dev/badge/github.com/tsayukov/optparams.svg
+[go-ref]: https://pkg.go.dev/github.com/tsayukov/optparams
 [example]: ./example_test.go
 [license]: ./LICENSE
