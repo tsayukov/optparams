@@ -51,7 +51,9 @@ all: audit test ;
 # e.g., `make <variable_1>=<value_1> <variable_2>=<value_2> [...]`.
 # ============================================================================ #
 
+## BINARY_DIR: get the directory with binaries
 BINARY_DIR = bin
+__VARIABLES__ += BINARY_DIR
 
 # Directory containing the Makefile.
 PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
