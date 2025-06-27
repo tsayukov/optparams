@@ -38,5 +38,36 @@ jobs:
       - name: Audit
         run: make audit
 
-      - name: Test
-        run: make test
+      - name: Test With Code Coverage
+        run: |
+          make test/cover
+          echo COVERAGE="$( \
+            go tool cover -func="$(make BINARY_DIR)"/coverage.out \
+            | grep 'total' \
+            | grep -Eo '[0-9]+\.[0-9]+' \
+          )" >> $GITHUB_ENV
+
+      - name: Create Coverage Badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          # Navigate to github.com/settings/tokens and create a new token with
+          # the gist scope.
+          # Go to the Secrets page of the settings of your repository
+          # (Settings > Secrets > Actions) and add this token as a new secret.
+          # You can give it any name, e.g., GIST_SECRET.
+          auth: ${{ secrets.GIST_SECRET }}
+
+          # Head over to gist.github.com and create a new gist.
+          # Name the file (e.g., coverage.json) and set the name in `filename`
+          # below.
+          # Set the ID of the gist (this is the long alphanumerical part of its
+          # URL) in `gistID` below.
+          filename: coverage.json
+          gistID: 9a66bd119961fc2bd759eff4835a99f2
+
+          label: ☂️ Coverage
+          labelColor: orange
+
+          message: ${{ env.COVERAGE }}%
+          minColorRange: 50
+          maxColorRange: 90
