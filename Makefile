@@ -23,8 +23,10 @@ endif
 .PHONY: help
 help:
 ifeq ($(OS),Windows_NT)
-	@ Write-Output "Usage:"
-	@ (Get-Content $(MAKEFILE_LIST)) -match "^##" -replace "^##","" <#\
+	@ Write-Host "Usage:" -NoNewline
+    # Hack: replace two '#' with the NULL character to force ConvertFrom-Csv
+    # to print empty lines.
+	@ (Get-Content $(MAKEFILE_LIST)) -match "^##" -replace "^##","$$([char]0x0)" <#\
  #> | ConvertFrom-Csv -Delimiter ":" -Header Target,Description <#\
  #> | Format-Table <#\
  #>     -AutoSize -HideTableHeaders <#\
@@ -33,7 +35,8 @@ else
 	@ echo 'Usage:'
 	@ sed --quiet 's/^##//p' $(MAKEFILE_LIST) \
     | column --table --separator ':' \
-    | sed --expression='s/^/ /'
+    | sed --expression='s/^/ /' \
+    && echo
 endif
 
 ## all: run audit and tests
