@@ -2,6 +2,7 @@
 
 [![Go Reference][go-ref-svg]][go-ref]
 [![Build Status][ci-svg]][ci]
+![Code Coverage][coverage-badge]
 [![MIT License][license-svg]][license]
 
 This package helps create functions with optional parameters, including those
@@ -32,6 +33,7 @@ This package is licensed under the terms of the MIT License
 [go-ref]: https://pkg.go.dev/github.com/tsayukov/optparams
 [ci-svg]: https://github.com/tsayukov/optparams/actions/workflows/go.yaml/badge.svg
 [ci]: https://github.com/tsayukov/optparams/actions/workflows/go.yaml
+[coverage-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/tsayukov/9a66bd119961fc2bd759eff4835a99f2/raw/coverage.json
 [license-svg]: https://img.shields.io/badge/License-MIT-blue.svg
 [license]: ./LICENSE
 [example]: ./example_test.go
