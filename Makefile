@@ -59,6 +59,18 @@ PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export GOBIN ?= $(PROJECT_ROOT)$(BINARY_DIR)
 export PATH := $(GOBIN)$(LIST_SEP)$(PATH)
 
+# Generate getters for all variables.
+define make_get_variable
+.PHONY: $1
+$1:
+	@ echo "$($1)"
+endef
+$(foreach var,$(__VARIABLES__), \
+    $(eval \
+        $(call make_get_variable,$(var)) \
+    ) \
+)
+
 # ============================================================================ #
 # Helpers
 # ============================================================================ #
