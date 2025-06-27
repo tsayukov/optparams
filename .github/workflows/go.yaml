@@ -58,17 +58,17 @@ jobs:
           auth: ${{ secrets.GIST_SECRET }}
 
           # Head over to gist.github.com and create a new gist.
-          # Name the file (e.g., coverage.json) and set the name in `filename`
-          # below.
+          # Name the file (e.g., coverage_<repository name>.json)
+          # and set the name in `filename` below.
           # Set the ID of the gist (this is the long alphanumerical part of its
           # URL) in `gistID` below.
-          filename: coverage.json
-          gistID: 9a66bd119961fc2bd759eff4835a99f2
+          filename: coverage_${{ github.event.repository.name }}.json
+          gistID: f718aa8b3aa4736adbbe480dcda082ad
 
           label: ☂️ Coverage
-          labelColor: orange
+          labelColor: 4e6e9e
 
           message: ${{ env.COVERAGE }}%
+          valColorRange: ${{ env.COVERAGE }}
           minColorRange: 50
-          valColorRange: 70
-          maxColorRange: 90
+          maxColorRange: 95
