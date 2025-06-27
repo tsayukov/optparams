@@ -1,3 +1,4 @@
+##:
 # ============================================================================ #
 # This is a multi-platform Makefile, trying to support both Unix-like
 # and Windows operating systems.
@@ -44,8 +45,9 @@ endif
 all: audit test ;
 
 # ============================================================================ #
-# Variables
-#
+##:
+##: Variables
+##:
 # These variables can be changed here directly by editing this file
 # or by passing them into the `make` call,
 # e.g., `make <variable_1>=<value_1> <variable_2>=<value_2> [...]`.
@@ -111,7 +113,9 @@ cgo/disable:
 	@ go env -w CGO_ENABLED=0
 
 # ============================================================================ #
-# Quality control
+##:
+##: Quality control
+##:
 # ============================================================================ #
 
 ## audit: run quality control checks
@@ -178,7 +182,9 @@ test/cover: create/binary_dir cgo/enable
 	@ go tool cover -html='$(BINARY_DIR)/coverage.out' -o '$(BINARY_DIR)/coverage.html'
 
 # ============================================================================ #
-# Build
+##:
+##: Build
+##:
 # ============================================================================ #
 
 ## mod/download: download modules to local cache
