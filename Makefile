@@ -145,13 +145,22 @@ mod/tidy:
 mod/verify:
 	@ go mod verify
 
-.PHONY: install/govulncheck
-install/govulncheck:
-	@ cd tools && go get golang.org/x/vuln/cmd/govulncheck && go install golang.org/x/vuln/cmd/govulncheck
+.PHONY: tools/install
+tools/install:
+ifeq ($(OS),Windows_NT)
+	@ cd tools <#\
+ #> && (Get-Content "tools.go") -match "^\s*_" -replace '\s|_|"|`',"" <#\
+ #> | ForEach-Object { go install $$_ }
+else
+	@ cd tools \
+    && for tool in $$(cat tools.go | grep -E '^\s*_' | grep -Po '(?<=(["`]))[\w./]+(?=\1)'); do \
+        go install $${tool}; \
+    done
+endif
 
 ## govulncheck: report known vulnerabilities that affect Go code
 .PHONY: govulncheck
-govulncheck: install/govulncheck
+govulncheck: tools/install
 	@ $(GOBIN)/govulncheck ./...
 
 ## fmt: gofmt (reformat) package sources
