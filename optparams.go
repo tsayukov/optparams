@@ -63,3 +63,11 @@ func Apply[T any](receiver *T, opts ...Func[T]) error {
 
 	return errors.Join(errs...)
 }
+
+// Join joins zero or more [Func] into one [Func] that applies them
+// to the receiver one by one.
+func Join[T any](opts ...Func[T]) Func[T] {
+	return func(receiver *T) error {
+		return Apply(receiver, opts...)
+	}
+}
