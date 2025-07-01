@@ -219,6 +219,66 @@ func Test_Apply(t *testing.T) {
 				},
 			}
 		}(),
+		{
+			name:     "empty Join",
+			receiver: newMockReceiver(),
+			want:     newMockReceiver(),
+			opts: []Func[mockReceiver]{
+				Join[mockReceiver](),
+			},
+		},
+		{
+			name:     "Join with one opt",
+			receiver: newMockReceiver(1),
+			want:     newMockReceiverOf('a'),
+			opts: []Func[mockReceiver]{
+				Join[mockReceiver](newOpt(0, 'a')),
+			},
+		},
+		{
+			name:     "Join with a few opts",
+			receiver: newMockReceiver(5),
+			want:     newMockReceiverOf('a', 'b', 'c', 'd', 'e'),
+			opts: []Func[mockReceiver]{
+				newOpt(0, 'a'),
+				Join[mockReceiver](
+					newOpt(1, 'b'),
+					newOpt(2, 'c'),
+					newOpt(3, 'd'),
+				),
+				newOpt(4, 'e'),
+			},
+		},
+		{
+			name:     "Join with a few opts + fast fail error",
+			receiver: newMockReceiver(5),
+			want:     newMockReceiverOf('a', 'b', 0, 0, 0),
+			opts: []Func[mockReceiver]{
+				newOpt(0, 'a'),
+				Join[mockReceiver](
+					newOpt(1, 'b'),
+					newOpt(2, 'c', ErrFailFast),
+					newOpt(3, 'd'),
+				),
+				newOpt(4, 'e'),
+			},
+			wantErr: ErrFailFast,
+		},
+		{
+			name:     "Join with a few opts + error",
+			receiver: newMockReceiver(5),
+			want:     newMockReceiverOf('a', 'b', 0, 'd', 'e'),
+			opts: []Func[mockReceiver]{
+				newOpt(0, 'a'),
+				Join[mockReceiver](
+					newOpt(1, 'b'),
+					newOpt(2, 'c', errMocks[0]),
+					newOpt(3, 'd'),
+				),
+				newOpt(4, 'e'),
+			},
+			wantErr: errMocks[0],
+		},
 	}
 
 	for _, tt := range tests {
