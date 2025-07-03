@@ -16,6 +16,8 @@ import (
 )
 
 func Test_Apply(t *testing.T) {
+	t.Parallel()
+
 	type mockReceiver struct {
 		values []rune
 	}
@@ -282,7 +284,10 @@ func Test_Apply(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			err := Apply(tt.receiver, tt.opts...)
 
 			if tt.wantErr != nil {
