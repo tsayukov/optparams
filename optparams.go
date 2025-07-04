@@ -35,6 +35,29 @@ func Default[T any, V any](field *V, defaultValue V) Func[T] {
 	}
 }
 
+// DefaultFunc creates [Func] that sets the passed field to the result
+// of the defaultValueFunc() call if the field does not equal its zero value.
+//
+// Use DefaultFunc instead of [Default] if there is a need to lazily evaluate
+// the default value.
+//
+// Note that a [Func] call does not check that the field belongs to the [Func]
+// receiver, but it returns an error if the pointer to the field is nil.
+func DefaultFunc[T any, V any](field *V, defaultValueFunc func() V) Func[T] {
+	return func(receiver *T) error {
+		if field == nil {
+			return fmt.Errorf("pointer %T to field in receiver %T is nil", field, *receiver)
+		}
+
+		var zero V
+		if reflect.DeepEqual(*field, zero) {
+			*field = defaultValueFunc()
+		}
+
+		return nil
+	}
+}
+
 // ErrFailFast indicates that a failure in the [Func] call causes the [Apply]
 // call to terminate early.
 var ErrFailFast = errors.New("fail fast")
