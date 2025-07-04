@@ -187,7 +187,7 @@ func Test_Apply(t *testing.T) {
 			wantErr: errors.Join(errMocks...),
 		},
 		{
-			name:     "nil field",
+			name:     "Default: nil field",
 			receiver: newMockReceiver(),
 			want:     newMockReceiver(),
 			opts: []Func[mockReceiver]{
@@ -218,6 +218,41 @@ func Test_Apply(t *testing.T) {
 				opts: []Func[mockReceiver]{
 					newOpt(0, 'a'),
 					Default[mockReceiver](&mr.values[0], 'a'),
+				},
+			}
+		}(),
+		{
+			name:     "DefaultFunc: nil field",
+			receiver: newMockReceiver(),
+			want:     newMockReceiver(),
+			opts: []Func[mockReceiver]{
+				DefaultFunc[mockReceiver](nil, func() rune { return 'a' }),
+			},
+			wantErr: fmt.Errorf(
+				"pointer %T to field in receiver %T is nil",
+				new(rune), mockReceiver{},
+			),
+		},
+		func() testCase {
+			mr := newMockReceiver(1)
+			return testCase{
+				name:     "no opt + default func",
+				receiver: mr,
+				want:     newMockReceiverOf('a'),
+				opts: []Func[mockReceiver]{
+					DefaultFunc[mockReceiver](&mr.values[0], func() rune { return 'a' }),
+				},
+			}
+		}(),
+		func() testCase {
+			mr := newMockReceiver(1)
+			return testCase{
+				name:     "opt + default func",
+				receiver: mr,
+				want:     newMockReceiverOf('a'),
+				opts: []Func[mockReceiver]{
+					newOpt(0, 'a'),
+					DefaultFunc[mockReceiver](&mr.values[0], func() rune { return 'a' }),
 				},
 			}
 		}(),
